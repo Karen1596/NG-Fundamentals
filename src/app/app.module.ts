@@ -1,28 +1,41 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NavBarComponent } from './nav/navbar.component';
-import { ToastrService } from './common/toastr.service';
+import { TOASTR_TOKEN, Toastr, JQ_TOKEN, CollapsibleWellComponent, SimpleModalComponent, ModalTriggerDirective } from './common/index';
 import { appRoutes } from './routes';
 import { RouterModule } from '@angular/router';
 import { Error404Component } from './errors/404.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
-  EventListResolver, 
-  EventsThumbnailComponent,
-  EventsListComponent,
-  CreateEventComponent
-      } from './events/index'
-    import {
-    EventRouteActivator,
-    EventDetailsComponent
-          } from './events/event-details/index'
-    import { EventsAppComponent } from './events-app.component';
-    import { EventService } from './events/shared/index';
+    EventListResolver, 
+    EventsThumbnailComponent,
+    EventsListComponent,
+    LocationValidator,
+    EventResolver,
+} from './events/index'
+import { CreateEventComponent } from './events/create-event.component'
+import {
+    EventDetailsComponent,
+    CreateSessionsComponent,
+    SessionListComponent,
+    UpvoteComponent,
+    VoterService
+} from './events/event-details/index'
+import { EventsAppComponent } from './events-app.component';
+import { DurationPipe, EventService } from './events/shared/index';
 import { AuthService } from './user/auth.service';
+import { HttpClientModule } from '@angular/common/http';
+
+let toastr:Toastr = window['toastr'];
+let jQuery = window['$'];
 
 @NgModule({
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   declarations: [
     EventsAppComponent,
@@ -31,12 +44,29 @@ import { AuthService } from './user/auth.service';
     NavBarComponent,
     EventDetailsComponent,
     CreateEventComponent,
-    Error404Component
+    Error404Component,
+    CreateSessionsComponent,
+    SessionListComponent,
+    SessionListComponent,
+    DurationPipe,
+    CollapsibleWellComponent,
+    SimpleModalComponent,
+    LocationValidator,
+    ModalTriggerDirective,
+    UpvoteComponent
   ],
   providers:[
     EventService, 
-    ToastrService, 
-    EventRouteActivator,
+    VoterService,
+    EventResolver, 
+    { 
+      provide: TOASTR_TOKEN,
+      useValue: toastr
+    },
+    { 
+      provide: JQ_TOKEN,
+      useValue: jQuery
+    },
     EventListResolver,
     AuthService,
     { 

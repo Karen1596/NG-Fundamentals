@@ -10,7 +10,7 @@ import { IEvent } from './shared/index'
       <hr>
       <div class="row">
         <div class="col-md-5" *ngFor = "let event of events">
-         <event-thumbnail (click)="handleThumbnailClick(event.name)" [event]="event"></event-thumbnail>
+         <event-thumbnail [event]="event"></event-thumbnail>
          </div>
         </div>
     </div>

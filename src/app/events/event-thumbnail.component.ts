@@ -6,15 +6,15 @@ import { IEvent } from './shared/index'
     template:`
     <div [routerLink]="['/events', event.id]">
     <div class="well hoverwell thumbnail pad-left">
-    <h2>{{event.name}}</h2>
+    <h2>{{event.name | uppercase}}</h2>
         <div [ngClass]="getStartTimeClass()" [ngSwitch]="event.time">
             time: {{event?.time}}
             <span *ngSwtichCase="'8:00 am'">(Early start)</span>
             <span *ngSwtichCase="'10:00 am'">(Late start)</span>
             <span *ngSwtichDefault>(Normal start)</span>
         </div>
-        <div>date: {{event.date}}</div>
-        <div>price: \${{event.price}}</div>
+        <div>date: {{event.date | date:'shortDate'}}</div>
+        <div>price: {{event.price | currency:'USD'}}</div>
         <div *ngIf="event?.location">location: {{event?.location?.address}}</div>
         <div [hidden]="!event?.location">city: {{event?.location?.city}}</div>
         <button class="btn btn-primary" (click)="handleClickMe()">Click me!</button>
